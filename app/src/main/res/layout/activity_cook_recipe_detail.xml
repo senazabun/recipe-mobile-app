@@ -5,4 +5,24 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CookRecipeDetailActivity"/>
+    tools:context=".CookRecipeDetailActivity">
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        android:id="@+id/webView"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/recipeDetail"
+        android:layout_width="390dp"
+        android:layout_height="466dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/webView"
+        app:layout_constraintVertical_bias="0.155"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

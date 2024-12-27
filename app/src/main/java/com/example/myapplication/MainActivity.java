@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     private View screenView;
+    private VideoView videoView;
     private Button btn1;
 
     @Override
@@ -31,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
         btn1 = findViewById(R.id.btn1);
         screenView = findViewById(R.id.relative_layout);
-        screenView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cook));
+        VideoView simpleVideoView = (VideoView) findViewById(R.id.videoView2);
+        simpleVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.animation));
+        simpleVideoView.setOnPreparedListener(mp -> mp.setLooping(true));
+        simpleVideoView.start();
+        //screenView.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cook));
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override

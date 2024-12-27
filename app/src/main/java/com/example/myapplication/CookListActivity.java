@@ -1,12 +1,10 @@
 package com.example.myapplication;
 
-import static android.app.PendingIntent.getActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,14 +14,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CookListActivity extends AppCompatActivity {
 
-    private ListView listView;
-    private ArrayList<String> cookList;
-    private ArrayAdapter<String> adapter;
+    int[] images = { R.drawable.cook, R.drawable.cook};
+
+    String[] version = {"Cook", "vook 2"};
+
+    String[] versionNumber = {"1.0", "2"};
+
+    ListView lView;
+
+    ListAdapter lAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +37,19 @@ public class CookListActivity extends AppCompatActivity {
             return insets;
         });
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cookList);
-        listView = (ListView) findViewById(R.id.cookListView);
+        lView = (ListView) findViewById(R.id.cookListView);
+        lAdapter = new ListAdapter(CookListActivity.this, version, versionNumber, images);
+        lView.setAdapter(lAdapter);
 
-        cookList = new ArrayList<>();
-        cookList.addAll(List.of("Apple","Banana","Pineapple"));
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cookList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CharSequence text = cookList.get((int) id);
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                toast.show();
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(CookListActivity.this, version[i]+" "+versionNumber[i], Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CookRecipeDetailActivity.class);
                 // TODO: ilgili yemeğin ismini yada id'sini bu intente gönder
                 startActivity(intent);
             }
         });
+
     }
 }
