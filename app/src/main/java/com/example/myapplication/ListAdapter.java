@@ -1,8 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,27 +10,26 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdapter extends BaseAdapter {
 
     Context context;
-    private final String [] values;
-    private final String [] numbers;
-    private final int [] images;
+    List<String> imageUrls = new ArrayList<String>();
+    List<String> names = new ArrayList<String>();
+    List<String> descriptions = new ArrayList<String>();
 
-    public ListAdapter(Context context, String [] values, String [] numbers, int [] images){
+    public ListAdapter(Context context, List<String> imageUrls, List<String> names, List<String> descriptions) {
         this.context = context;
-        this.values = values;
-        this.numbers = numbers;
-        this.images = images;
+        this.imageUrls = imageUrls;
+        this.names = names;
+        this.descriptions = descriptions;
     }
 
     @Override
     public int getCount() {
-        return values.length;
+        return imageUrls.size();
     }
 
     @Override
@@ -48,7 +45,6 @@ public class ListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-
         ViewHolder viewHolder;
 
         final View result;
@@ -62,12 +58,6 @@ public class ListAdapter extends BaseAdapter {
             viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.aVersiontxt);
             viewHolder.icon = (ImageView) convertView.findViewById(R.id.appIconIV);
 
-            String imageUrl = "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1hR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg";
-
-            Picasso.get()
-                    .load(imageUrl)
-                    .into(viewHolder.icon);
-
             result=convertView;
 
             convertView.setTag(viewHolder);
@@ -76,9 +66,9 @@ public class ListAdapter extends BaseAdapter {
             result=convertView;
         }
 
-        viewHolder.txtName.setText(values[position]);
-        viewHolder.txtVersion.setText("Version: "+numbers[position]);
-        viewHolder.icon.setImageResource(images[position]);
+        viewHolder.txtName.setText(names.get(position));
+        viewHolder.txtVersion.setText(descriptions.get(position));
+        Picasso.get().load(imageUrls.get(position)).into(viewHolder.icon);
 
         return convertView;
     }
