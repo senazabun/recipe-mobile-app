@@ -1,13 +1,8 @@
 package com.example.myapplication;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -30,7 +25,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn1;
     private int recordSize = 0;
 
     @Override
@@ -44,22 +38,13 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        btn1 = findViewById(R.id.btn1);
         VideoView simpleVideoView = (VideoView) findViewById(R.id.videoView2);
-
-        generateRecipe();
 
         simpleVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.animation));
         simpleVideoView.setOnPreparedListener(mp -> mp.setLooping(true));
         simpleVideoView.start();
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CookListActivity.class);
-                startActivity(intent);
-            }
-        });
+        generateRecipe();
     }
 
     private void generateRecipe() {
@@ -74,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        recordSize = task.getResult().size();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             db.collection("recipes").document(document.getId()).delete();
                         }
@@ -84,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createRecipes() {
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("recipes")
@@ -96,27 +79,30 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
                             if (recordSize == 0) {
-                                for (int i = 0; i < 1; i++) {
-                                    Map<String, Object> recipe = new HashMap<>();
-                                    recipe.put("name", "Chicken Noodles");
-                                    recipe.put("description", "lorem ipsum");
-                                    recipe.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWcuUShgRtzSQlS88X65oYviWamLirEKi99A&s");
-                                    recipe.put("videoUrl", "https://www.youtube.com/watch?v=mhDJNfV7hjk&t=1s&ab_channel=GordonRamsay");
+                                Map<String, Object> recipe = new HashMap<>();
+                                recipe.put("name", "Chicken Noodles");
+                                recipe.put("description", "lorem ipsum");
+                                recipe.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWcuUShgRtzSQlS88X65oYviWamLirEKi99A&s");
+                                recipe.put("videoUrl", "https://www.youtube.com/watch?v=mhDJNfV7hjk&t=1s&ab_channel=GordonRamsay");
 
-                                    Map<String, Object> recipe2 = new HashMap<>();
-                                    recipe2.put("name", "Hamburger");
-                                    recipe2.put("description", "hamburger desc");
-                                    recipe2.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD0_jlLGG0O_c1pPmnhEI-nDYvZY67pd-uOg&s");
-                                    recipe2.put("videoUrl", "https://www.youtube.com/watch?v=_6BrRB8VCvo&ab_channel=Epicurious");
+                                Map<String, Object> recipe2 = new HashMap<>();
+                                recipe2.put("name", "Hamburger");
+                                recipe2.put("description", "hamburger desc");
+                                recipe2.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD0_jlLGG0O_c1pPmnhEI-nDYvZY67pd-uOg&s");
+                                recipe2.put("videoUrl", "https://www.youtube.com/watch?v=_6BrRB8VCvo&ab_channel=Epicurious");
 
-                                    db.collection("recipes").add(recipe);
-                                    db.collection("recipes").add(recipe2);
-                                }
+                                Map<String, Object> recipe3 = new HashMap<>();
+                                recipe3.put("name", "Mac n Cheese");
+                                recipe3.put("description", " Cook 2 cups of macaroni in boiling water and drain. In a pan, melt 2 tablespoons of butter, whisk in 2 tablespoons of flour, and cook for 1 minute. Gradually add 2 cups of milk, whisking constantly, until the sauce thickens. Stir in 1½ cups of cheddar cheese and season with salt and pepper. Finally, mix the cooked pasta with the cheese sauce and serve hot.");
+                                recipe3.put("image", "https://assets.unileversolutions.com/recipes-v2/110418.jpg");
+                                recipe3.put("videoUrl", "https://www.youtube.com/watch?v=O504Ezt8NPc&ab_channel=Smokin%27%26GrillinwithAB");
+
+                                db.collection("recipes").add(recipe);
+                                db.collection("recipes").add(recipe2);
+                                db.collection("recipes").add(recipe3);
                             }
                             Intent intent = new Intent(getApplicationContext(), CookListActivity.class);
                             startActivity(intent);
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
                 });
