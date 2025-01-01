@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
                             if (recordSize == 0) {
                                 Map<String, Object> recipe = new HashMap<>();
                                 recipe.put("name", "Chicken Noodles");
-                                recipe.put("description", "lorem ipsum");
+                                recipe.put("description", "Cook noodles according to package instructions and set aside. In a pan, sauté diced chicken with garlic, ginger, and soy sauce until cooked. Add chopped vegetables like carrots and bell peppers, stir-fry until tender, then mix in the noodles. Toss with more soy sauce, sesame oil, and optional chili flakes. Serve hot!");
                                 recipe.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWcuUShgRtzSQlS88X65oYviWamLirEKi99A&s");
                                 recipe.put("videoUrl", "https://www.youtube.com/watch?v=mhDJNfV7hjk&t=1s&ab_channel=GordonRamsay");
 
                                 Map<String, Object> recipe2 = new HashMap<>();
                                 recipe2.put("name", "Hamburger");
-                                recipe2.put("description", "hamburger desc");
+                                recipe2.put("description", "Mix ground beef with salt and pepper, shape into patties, and cook on a hot grill for 3-4 minutes per side. Toast buns, add lettuce, tomato, cheese, condiments, and the patty. Assemble and serve!");
                                 recipe2.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD0_jlLGG0O_c1pPmnhEI-nDYvZY67pd-uOg&s");
                                 recipe2.put("videoUrl", "https://www.youtube.com/watch?v=_6BrRB8VCvo&ab_channel=Epicurious");
 
@@ -97,9 +97,17 @@ public class MainActivity extends AppCompatActivity {
                                 recipe3.put("image", "https://assets.unileversolutions.com/recipes-v2/110418.jpg");
                                 recipe3.put("videoUrl", "https://www.youtube.com/watch?v=O504Ezt8NPc&ab_channel=Smokin%27%26GrillinwithAB");
 
+                                Map<String, Object> recipe4 = new HashMap<>();
+                                recipe4.put("name", "Tortellini");
+                                recipe4.put("description", "Cook tortellini according to package instructions and drain. In a pan, heat olive oil or butter, sauté garlic, and add cream or tomato sauce. Stir in grated cheese, spinach, or mushrooms for extra flavor. Toss the cooked tortellini in the sauce, season with salt, pepper, and herbs, then serve warm!");
+                                recipe4.put("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs7YasVe_aZteHuvgM1qLj1W-7L6vGY2UpNg&s");
+                                recipe4.put("videoUrl", "https://www.youtube.com/watch?v=j45bt8ojWR0&ab_channel=ForkettiFood");
+
+
                                 db.collection("recipes").add(recipe);
                                 db.collection("recipes").add(recipe2);
                                 db.collection("recipes").add(recipe3);
+                                db.collection("recipes").add(recipe4);
                             }
                             Intent intent = new Intent(getApplicationContext(), CookListActivity.class);
                             startActivity(intent);
